@@ -21,7 +21,7 @@ function conditional_download() {
     rm -rf ${DESTINATION}
     mkdir -p ${DESTINATION}
     echo "-----> Downloading ${DOWNLOAD_URL}"
-    curl ${DOWNLOAD_URL} -s | tar xz -C ${DESTINATION}
+    curl -L ${DOWNLOAD_URL} -s | tar xz -C ${DESTINATION}
   fi
 }
 
@@ -30,7 +30,7 @@ cd ${BUILD_DIR}
 mkdir -p ${CACHE_DIR}
 
 MONO_CACHE_LOCATION=${CACHE_DIR}/$STACK/mono-${MONO_VERSION}
-curl -L $MONO_VM_BINARY -s | tar zx -C ${MONO_CACHE_LOCATION}
+conditional_download $MONO_VM_BINARY ${MONO_CACHE_LOCATION}
 
 # Copy mono from cache to where we're building the slug
 cp -r "${MONO_CACHE_LOCATION}/mono" .
