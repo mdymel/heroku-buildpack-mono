@@ -2,7 +2,12 @@
 
 This is a [Heroku buildpack](http://devcenter.heroku.com/articles/buildpack) for Mono that will run [ASP.NET](http://friism.com/running-net-on-heroku) and [Katana/OWIN applications](http://friism.com/running-owin-katana-apps-on-heroku).
 
-It uses [nginx](http://www.mono-project.com/FastCGI_Nginx) as the web server and runs on Mono 3.10.0.
+It uses [nginx](http://www.mono-project.com/FastCGI_Nginx) as the web server and runs on Mono 4.0.1.
+
+## Changes from Friism's version
+
+* Downloads Mono packages from GitHub, not S3
+* Runs on Mono 4.0.1, not 3.10.0
 
 ## Usage
 
@@ -15,7 +20,7 @@ Additional details and guides:
 
 Example usage:
 
-    $ heroku create --buildpack http://github.com/friism/heroku-buildpack-mono.git
+    $ heroku create --buildpack http://github.com/yngndrw/heroku-buildpack-mono.git
     $ git push heroku master
 
 The buildpack will detect your app as ASP.NET if it has the file `global.asax` in the root or at one directory depth or as .NET if it has a `.sln` file.
