@@ -55,20 +55,25 @@ export PATH="/app/mono/bin:${PATH}"
 export LD_LIBRARY_PATH="/app/mono/lib:${LD_LIBRARY_PATH}"
 
 # Add certs to trust store
+echo "-----> Adding certs to trust store"
 cp -r ${LP_DIR}/.config ~/.
 cp -r ${LP_DIR}/.config ${BUILD_DIR}/.
 
-NUGET_EXECUTABLE_PATH=${CACHE_DIR}/nuget.exe
-if [ ! -f ${NUGET_EXECUTABLE_PATH} ]; then
-  curl -LSso ${NUGET_EXECUTABLE_PATH} http://nuget.org/nuget.exe
-fi
+#NUGET_EXECUTABLE_PATH=${CACHE_DIR}/nuget.exe
+#if [ ! -f ${NUGET_EXECUTABLE_PATH} ]; then
+#  curl -LSso ${NUGET_EXECUTABLE_PATH} http://nuget.org/nuget.exe
+#fi
 
 BUILD_CACHE_LOCATION=${CACHE_DIR}/build/
+
+echo "-----> mkdir cache_location"
 mkdir -p ${BUILD_CACHE_LOCATION}
 
 #mono ${NUGET_EXECUTABLE_PATH} restore -NonInteractive
+echo "-----> Running build"
 xbuild /property:Configuration=Release /property:OutDir=${BUILD_CACHE_LOCATION} ${SLN}
 
+echo "-----> copying build"
 cp -r ${BUILD_CACHE_LOCATION}* ${BUILD_DIR}
 
 mkdir -p ${BUILD_DIR}/.profile.d
